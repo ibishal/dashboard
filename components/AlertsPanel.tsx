@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert } from '../types';
-import { Bell, Check, Clock, AlertTriangle } from 'lucide-react';
+import { Bell, Check, Clock, AlertTriangle, XSquare, Square } from 'lucide-react';
 
 interface AlertsPanelProps {
   alerts: Alert[];
@@ -11,56 +11,58 @@ const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts, onAcknowledge }) => {
   const activeAlerts = alerts.filter(a => !a.acknowledged);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-full flex flex-col">
-      <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-            <div className="bg-red-50 p-2 rounded-lg text-red-500">
-                <Bell size={20} />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900">Active Alerts</h3>
+    <div className="bg-white border border-zinc-200 h-full flex flex-col">
+      <div className="p-6 border-b border-zinc-200 flex justify-between items-center bg-zinc-900 text-white">
+        <div className="flex items-center gap-3">
+            <AlertTriangle size={18} className="text-amber-400" />
+            <h3 className="text-sm font-bold uppercase tracking-widest">System Events</h3>
         </div>
-        <span className="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded-full">
-            {activeAlerts.length}
-        </span>
+        <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase text-zinc-400 font-mono">Count</span>
+            <span className="bg-white text-zinc-900 text-xs font-bold font-mono px-1.5 py-0.5">
+                {activeAlerts.length.toString().padStart(2, '0')}
+            </span>
+        </div>
       </div>
 
-      <div className="p-6 flex-1 overflow-y-auto space-y-4">
+      <div className="flex-1 overflow-y-auto bg-zinc-50">
         {activeAlerts.length === 0 ? (
-          <div className="text-center py-10 text-gray-400">
-            <Check size={48} className="mx-auto mb-2 opacity-20" />
-            <p>All systems operational</p>
+          <div className="flex flex-col items-center justify-center h-full text-zinc-400">
+            <Check size={32} className="mb-2 opacity-50" />
+            <p className="font-mono text-xs uppercase tracking-widest">No Active Incidents</p>
           </div>
         ) : (
-          activeAlerts.map(alert => (
-            <div key={alert.id} className="group p-4 rounded-xl bg-gray-50 border border-gray-100 hover:border-gray-200 transition-all">
-              <div className="flex items-start gap-3">
-                <div className={`mt-1 ${alert.severity === 'critical' ? 'text-red-500' : 'text-amber-500'}`}>
-                    <AlertTriangle size={18} />
-                </div>
-                <div className="flex-1">
-                    <h4 className="text-sm font-semibold text-gray-900">{alert.message}</h4>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                        <Clock size={12} />
-                        <span>{new Date(alert.timestamp).toLocaleTimeString()}</span>
-                        <span>•</span>
-                        <span className="font-mono">{alert.nodeId}</span>
-                    </div>
+          <div className="divide-y divide-zinc-200 border-b border-zinc-200">
+            {activeAlerts.map(alert => (
+              <div key={alert.id} className="group p-4 bg-white hover:bg-zinc-50 transition-colors relative pl-4 border-l-4 border-l-transparent hover:border-l-zinc-900">
+                <div className="flex justify-between items-start gap-4">
+                   <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className={`text-[10px] font-bold uppercase px-1 ${alert.severity === 'critical' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'}`}>
+                                {alert.severity}
+                            </span>
+                            <span className="text-[10px] font-mono text-zinc-400">{new Date(alert.timestamp).toLocaleTimeString()}</span>
+                        </div>
+                        <h4 className="text-xs font-bold text-zinc-800 uppercase leading-relaxed">{alert.message}</h4>
+                        <div className="mt-1 font-mono text-[10px] text-zinc-500">SOURCE: {alert.nodeId}</div>
+                   </div>
+                   <button 
+                    onClick={() => onAcknowledge(alert.id)}
+                    className="p-1 hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 transition-colors"
+                    title="Acknowledge"
+                   >
+                    <XSquare size={16} />
+                   </button>
                 </div>
               </div>
-              <button 
-                onClick={() => onAcknowledge(alert.id)}
-                className="mt-3 w-full py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-600 hover:text-blue-600 hover:border-blue-200 transition-colors"
-              >
-                Acknowledge
-              </button>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
       
-      <div className="p-4 border-t border-gray-100 bg-gray-50/50 rounded-b-2xl">
-        <button className="w-full text-center text-sm text-gray-500 hover:text-gray-900 font-medium">
-            View Alert History
+      <div className="p-3 bg-white border-t border-zinc-200">
+        <button className="w-full text-center text-[10px] uppercase font-bold tracking-widest text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 py-2 border border-dashed border-zinc-300 transition-all">
+            :: View Event Log History
         </button>
       </div>
     </div>

@@ -22,33 +22,47 @@ const StatCard: React.FC<StatCardProps> = ({
 }) => {
   
   const colorStyles = {
-    blue: 'bg-blue-50 text-blue-600',
-    green: 'bg-emerald-50 text-emerald-600',
-    red: 'bg-red-50 text-red-600',
-    orange: 'bg-orange-50 text-orange-600',
-    purple: 'bg-purple-50 text-purple-600',
+    blue: 'text-blue-600',
+    green: 'text-emerald-600',
+    red: 'text-red-600',
+    orange: 'text-orange-600',
+    purple: 'text-purple-600',
+  };
+
+  const borderStyles = {
+     blue: 'border-l-blue-600',
+     green: 'border-l-emerald-600',
+     red: 'border-l-red-600',
+     orange: 'border-l-orange-600',
+     purple: 'border-l-purple-600',
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between h-full transition-transform hover:-translate-y-1 duration-300">
+    <div className={`bg-white p-6 border border-zinc-200 border-l-4 ${borderStyles[color]} relative group hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow duration-200`}>
+      {/* Technical corner marker */}
+      <div className="absolute top-0 right-0 p-1">
+        <div className="w-2 h-2 bg-zinc-200 group-hover:bg-zinc-900 transition-colors"></div>
+      </div>
+
       <div className="flex justify-between items-start mb-4">
-        <div className={`p-3 rounded-xl ${colorStyles[color]}`}>
-          <Icon size={24} />
+        <div className={`flex items-center gap-2 ${colorStyles[color]}`}>
+          <Icon size={20} strokeWidth={1.5} />
+          <span className="text-[10px] uppercase tracking-widest font-bold text-zinc-400">Metric</span>
         </div>
         {trend && (
-          <div className={`flex items-center text-sm font-medium ${
-            trend === 'up' ? 'text-emerald-500' : trend === 'down' ? 'text-red-500' : 'text-gray-400'
+          <div className={`flex items-center text-xs font-mono font-bold ${
+            trend === 'up' ? 'text-emerald-600' : trend === 'down' ? 'text-red-600' : 'text-zinc-400'
           }`}>
-            {trend === 'up' ? '↑' : trend === 'down' ? '↓' : '•'} {trendValue}
+            {trend === 'up' ? '▲' : trend === 'down' ? '▼' : '■'} {trendValue}
           </div>
         )}
       </div>
       
       <div>
-        <h3 className="text-gray-500 text-sm font-medium mb-1">{title}</h3>
+        <h3 className="text-zinc-500 text-xs uppercase tracking-wider font-semibold mb-1">{title}</h3>
         <div className="flex items-baseline gap-2">
-          <span className="text-3xl font-bold text-gray-900 tracking-tight">{value}</span>
-          {subValue && <span className="text-sm text-gray-400 font-medium">{subValue}</span>}
+          <span className="text-3xl font-bold text-zinc-900 font-mono tracking-tighter">{value}</span>
+          {subValue && <span className="text-xs text-zinc-400 font-mono uppercase">{subValue}</span>}
         </div>
       </div>
     </div>
