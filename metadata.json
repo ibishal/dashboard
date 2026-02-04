@@ -1,0 +1,5 @@
+{
+  "name": "Conflux Pulse Dashboard",
+  "description": "A real-time observability dashboard for Conflux Network nodes, tracking sync status, peer counts, gas prices, and system health with alert management.",
+  "requestFramePermissions": []
+}
