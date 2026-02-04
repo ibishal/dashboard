@@ -38,10 +38,10 @@ const StatCard: React.FC<StatCardProps> = ({
   };
 
   return (
-    <div className={`bg-white p-6 border border-zinc-200 border-l-4 ${borderStyles[color]} relative group hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow duration-200`}>
+    <div className={`bg-white p-6 border border-zinc-200 border-l-4 ${borderStyles[color]} relative group hover:bg-zinc-50/50 hover:border-zinc-300 transition-colors duration-200`}>
       {/* Technical corner marker */}
       <div className="absolute top-0 right-0 p-1">
-        <div className="w-2 h-2 bg-zinc-200 group-hover:bg-zinc-900 transition-colors"></div>
+        <div className="w-1.5 h-1.5 bg-zinc-100 group-hover:bg-zinc-300 transition-colors"></div>
       </div>
 
       <div className="flex justify-between items-start mb-4">

@@ -34,7 +34,7 @@ const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts, onAcknowledge }) => {
         ) : (
           <div className="divide-y divide-zinc-200 border-b border-zinc-200">
             {activeAlerts.map(alert => (
-              <div key={alert.id} className="group p-4 bg-white hover:bg-zinc-50 transition-colors relative pl-4 border-l-4 border-l-transparent hover:border-l-zinc-900">
+              <div key={alert.id} className="group p-4 bg-white hover:bg-zinc-50 transition-colors relative pl-4 border-l-4 border-l-transparent hover:border-l-zinc-300">
                 <div className="flex justify-between items-start gap-4">
                    <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
